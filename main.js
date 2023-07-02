@@ -139,23 +139,48 @@ const myEvery = (array, func) => {
 console.log(myEvery(students, st => st.isMarried));
 
 
-const myFlat = (array, level = 1) => {
-    const result = [];
+// const myFlat = (array, level = 1) => {
+//     const result = [];
+//
+//     for (let i = 0; i < array.length; i++) {
+//         if (Array.isArray(array[i])) {
+//             if (level > 0) {
+//                 for (let j = 0; j < array[i].length; j++) {
+//                     result.push(array[i][j]);
+//                 }
+//                 level -= 1;
+//             }
+//         } else {
+//             result.push(array[i]);
+//         }
+//     }
+//     return result;
+// };
+//
+// console.log(myFlat([1, 2, [3, [4, 5]]], 2))
 
-    for (let i = 0; i < array.length; i++) {
-        if (Array.isArray(array[i])) {
-            if (level > 0) {
-                for (let j = 0; j < array[i].length; j++) {
-                    result.push(array[i][j]);
-                }
-                level -= 1;
-            }
-        } else {
-            result.push(array[i]);
-        }
+
+const bigFlat = (array, level = 1) => {
+    let bigResult = array;
+    while (level > 0) {
+        bigResult = simpleFlat(bigResult)
+        level = level - 1
     }
-    return result;
-};
 
+    function simpleFlat (array) {
+        const result = []
+        for (let i = 0; i < array.length; i++) {
+            if(Array.isArray(array[i])){
+                for (let j = 0; j < array[i].length; j++) {
+                    result.push(array[i][j])
+                }
+            } else {
+                result.push(array[i])
+            }
+        }
+        return result
+    }
+    return bigResult
+}
 
-console.log(myFlat([1, 2, [3, [4, 5]]], 2))
+console.log(bigFlat([1, 2, [3, [4,[7], 5]]], 3));
